@@ -1,0 +1,10 @@
+# Intellij
+.idea/
+*.iml
+*.iws
+
+com.spring.jpa.services.jdbc
+
+# Maven
+log/
+target/
