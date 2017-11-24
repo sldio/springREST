@@ -3,7 +3,7 @@
 *.iml
 *.iws
 
-com/spring/jpa/services/jdbc/
+C:/Users/А/IdeaProjects/springRest/src/main/java/com/spring/jpa/services/jdbc/
 
 # Maven
 log/
