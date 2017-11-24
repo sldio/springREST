@@ -3,7 +3,7 @@
 *.iml
 *.iws
 
-com.spring.jpa.services.jdbc
+com/spring/jpa/services/jdbc/
 
 # Maven
 log/

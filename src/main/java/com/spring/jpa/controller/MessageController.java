@@ -1,6 +1,7 @@
 package com.spring.jpa.controller;
 
 import com.spring.jpa.domain.Message;
+import com.spring.jpa.services.MessageService;
 import com.spring.jpa.services.jdbc.DatabaseWorker;
 import com.spring.jpa.services.implementations.MessageServiceImpl;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class MessageController
     private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     @Autowired
-    private MessageServiceImpl messageService;
+    private MessageService messageService;
 
     @GetMapping("/test")
     public Message showHello(@RequestParam(defaultValue = "default text") String message)
@@ -28,17 +29,26 @@ public class MessageController
         return new Message(String.format("Hello %s!", message));
     }
 
-    /*@GetMapping("/show-all")
-    public List<Message> showAllMessages(){
+    @GetMapping("/show-all")
+    public List<Message> showAllMessagesJDBC(){
         logger.error("----------------show all");
         List<Message> list = DatabaseWorker.getAllMessages();
         DatabaseWorker.closeConnection();
 
         return list;
-    }*/
+    }
 
     @GetMapping("/show")
     public List<Message> showAll(){
+        logger.error("----------------show all with messageRepository");
+        List<Message> list = messageService.getAll();
+        System.out.println(list.size());
+
+        return list;
+    }
+
+    @GetMapping("/select")
+    public List<Message> select(){
         logger.error("----------------show all with messageRepository");
         List<Message> list = messageService.getAll();
         System.out.println(list.size());

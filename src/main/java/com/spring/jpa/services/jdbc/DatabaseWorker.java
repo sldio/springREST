@@ -1,6 +1,8 @@
 package com.spring.jpa.services.jdbc;
 
 import com.spring.jpa.domain.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +14,14 @@ import java.util.List;
 public class DatabaseWorker
 {
     private static Connection connection = ConnectionUtil.getConnection();
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseWorker.class);
 
     public static void writeInDatabase(Message message)
     {
         try
         {
             PreparedStatement statement = connection.prepareStatement(
-                    "insert into test.test (id, content) values (?");
+                    "insert into public.message (id, content) values (?");
             //statement.setLong(1, message.getId());
             statement.setString(2, message.getContent());
             System.out.println(statement.executeUpdate());
@@ -35,12 +38,16 @@ public class DatabaseWorker
         try
         {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM test.test");
+                    "SELECT * FROM public.message");
 
             ResultSet resultSet = statement.executeQuery();
+            logger.debug("************getAll");
             while (resultSet.next()){
+
                 Long id = resultSet.getLong("ID");
+                logger.debug("->next {}",id);
                 String content = resultSet.getString("CONTENT");
+                logger.debug("-->content {}", content);
                 if (content == null){
                     content = "default";
                 }
