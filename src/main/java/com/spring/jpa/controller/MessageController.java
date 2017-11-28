@@ -7,10 +7,13 @@ import com.spring.jpa.services.implementations.MessageServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,6 +26,7 @@ public class MessageController
     private MessageService messageService;
 
     @GetMapping("/test")
+    @Transactional
     public Message showHello(@RequestParam(defaultValue = "default text") String message)
     {
         logger.info("---------------test ok");
@@ -30,7 +34,7 @@ public class MessageController
     }
 
     @GetMapping("/show-all")
-    public List<Message> showAllMessagesJDBC(){
+    public List<Message> showAllMessagesJDBC() {
         logger.error("----------------show all");
         List<Message> list = DatabaseWorker.getAllMessages();
         DatabaseWorker.closeConnection();
@@ -39,6 +43,7 @@ public class MessageController
     }
 
     @GetMapping("/show")
+    @ReadOnlyProperty
     public List<Message> showAll(){
         logger.error("----------------show all with messageRepository");
         List<Message> list = messageService.getAll();
@@ -48,6 +53,7 @@ public class MessageController
     }
 
     @GetMapping("/select")
+    @ReadOnlyProperty
     public List<Message> select(){
         logger.error("----------------show all with messageRepository");
         List<Message> list = messageService.getAll();

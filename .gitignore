@@ -4,7 +4,9 @@
 *.iws
 
 C:/Users/А/IdeaProjects/springRest/src/main/java/com/spring/jpa/services/jdbc/
+com/spring/jpa/controller/FileDownloaderController
 
 # Maven
 log/
 target/
+logs/
